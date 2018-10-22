@@ -35,6 +35,7 @@
 
         <!--<mapping class="mystra.User"/>-->
         <mapping class="com.mystra.model.ActivityItem"/>
+        <mapping class="com.mystra.model.ActivityDay"/>
 
     </session-factory>
 

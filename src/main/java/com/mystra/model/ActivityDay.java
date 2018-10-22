@@ -4,52 +4,55 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import com.mystra.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
+@Entity
+@Table(name = "activity_day")
 public class ActivityDay {
-    private static ActivityDay instance = new ActivityDay();
+    private int id;
+    private LocalDate date;
+    private List<ActivityItem> activities;
 
-    private ObservableList<com.mystra.model.ActivityItem> activityItems;
-
-    public static ActivityDay getInstance() {
-        return instance;
+    public ActivityDay() {
+        // Used by Hibernate
     }
 
-    private ActivityDay() {
+    public ActivityDay(LocalDate date) {
+        this.date = date;
     }
 
-    public ObservableList<ActivityItem> getActivityItems() {
-        return activityItems;
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    public int getId() {
+        return id;
     }
 
-    public void addTodoItem(ActivityItem item) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-
-        session.beginTransaction();
-        session.save(item);
-        session.getTransaction().commit();
-        session.close();
-        activityItems.add(item);
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setActivityItems(ObservableList<ActivityItem> activityItems) {
-        this.activityItems = activityItems;
+    @Column(name = "date")
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void loadTodoItems() {
-        activityItems = FXCollections.observableArrayList();
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        List results = session.createQuery("from ActivityItem").list();
-        session.close();
-        activityItems.addAll(results);
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
-    public void deleteTodoItem(ActivityItem item) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
 
-        session.beginTransaction();
-        session.delete(item);
-        session.getTransaction().commit();
-        session.close();
-        activityItems.remove(item);
+    @OneToMany(targetEntity = ActivityItem.class,
+               mappedBy = "activityDay",
+               cascade = CascadeType.ALL,
+               fetch = FetchType.EAGER)
+    public List<ActivityItem> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<ActivityItem> activities) {
+        this.activities = activities;
     }
 }

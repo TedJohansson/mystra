@@ -10,13 +10,17 @@ public class ActivityItem {
     private String details;
     private int hourOfDay;
 
+    private ActivityDay activityDay;
+
     public ActivityItem() {
+        // Used by Hibernate
     }
 
-    public ActivityItem(String shortDescription, String details, int hourOfDay) {
+    public ActivityItem(String shortDescription, String details, int hourOfDay, ActivityDay activityDay) {
         this.shortDescription = shortDescription;
         this.details = details;
         this.hourOfDay = hourOfDay;
+        this.activityDay = activityDay;
     }
 
     @Id
@@ -54,5 +58,15 @@ public class ActivityItem {
 
     public void setHourOfDay(int hourOfDay) {
         this.hourOfDay = hourOfDay;
+    }
+
+    @ManyToOne
+    @JoinColumn(name="activityDay", nullable=false)
+    public ActivityDay getActivityDay() {
+        return activityDay;
+    }
+
+    public void setActivityDay(ActivityDay activityDay) {
+        this.activityDay = activityDay;
     }
 }

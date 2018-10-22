@@ -1,8 +1,11 @@
 package com.mystra.controller;
 
 import com.mystra.model.ActivityDay;
+import com.mystra.util.HibernateUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,16 +16,18 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import com.mystra.model.ActivityItem;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
 
 public class RootLayoutController {
-    private List<ActivityItem> activityItems;
-
+    private ObservableList<ActivityItem> activityItems;
     @FXML
     private ListView<ActivityItem> activityItemListView;
     @FXML
@@ -42,7 +47,17 @@ public class RootLayoutController {
             }
         });
 
-        SortedList<ActivityItem> sortedList = new SortedList<>(ActivityDay.getInstance().getActivityItems(),
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        // TODO: Learn where this logic should sit
+        String hql = "SELECT ad FROM ActivityDay ad WHERE ad.date = :date";
+        Query query = session.createQuery(hql);
+        query.setParameter("date", LocalDate.now());
+        ActivityDay activityDay = (ActivityDay) query.getSingleResult();
+        activityItems = FXCollections.observableArrayList(activityDay.getActivities());
+        session.close();
+
+        SortedList<ActivityItem> sortedList = new SortedList<>(activityItems,
                 Comparator.comparing(ActivityItem::getHourOfDay));
 
         activityItemListView.setItems(sortedList);
@@ -98,6 +113,7 @@ public class RootLayoutController {
         if(result.isPresent() && result.get() == ButtonType.OK) {
             DialogController controller = fxmlLoader.getController();
             ActivityItem newItem = controller.processResults();
+            activityItems.add(newItem);
             activityItemListView.getSelectionModel().select(newItem);
         }
 
@@ -127,7 +143,13 @@ public class RootLayoutController {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && (result.get() == ButtonType.OK)){
-            ActivityDay.getInstance().deleteTodoItem(item);
+            // TODO clean up this logic it needs to go else where.
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.delete(item);
+            session.getTransaction().commit();
+            session.close();
+            activityItems.remove(item);
         }
     }
 }
