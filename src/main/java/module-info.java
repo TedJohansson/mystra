@@ -1,4 +1,4 @@
-module Mystra {
+module com.mystra {
     requires javafx.fxml;
     requires javafx.controls;
     requires org.hibernate.orm.core;
@@ -12,6 +12,7 @@ module Mystra {
     requires com.sun.istack.runtime;
     requires com.sun.xml.fastinfoset;
 
-    opens mystra;
-    opens mystra.datamodel;
+    opens com.mystra;
+    opens com.mystra.model;
+    opens com.mystra.controller;
 }

@@ -34,7 +34,7 @@
         <!--<property name="hbm2ddl.auto">create</property>-->
 
         <!--<mapping class="mystra.User"/>-->
-        <mapping class="mystra.datamodel.ActivityItem"/>
+        <mapping class="com.mystra.model.ActivityItem"/>
 
     </session-factory>
 

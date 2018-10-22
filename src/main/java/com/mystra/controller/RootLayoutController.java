@@ -1,5 +1,6 @@
-package mystra;
+package com.mystra.controller;
 
+import com.mystra.model.ActivityDay;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.transformation.SortedList;
@@ -11,8 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
-import mystra.datamodel.ActivityDay;
-import mystra.datamodel.ActivityItem;
+import com.mystra.model.ActivityItem;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -20,7 +20,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-public class Controller {
+public class RootLayoutController {
     private List<ActivityItem> activityItems;
 
     @FXML
@@ -82,7 +82,7 @@ public class Controller {
         dialog.setHeaderText("Use this dialog to create a new todo item");
 
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("todoItemDialog.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/com/mystra/view/todoItemDialog.fxml"));
         try {
             dialog.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e) {

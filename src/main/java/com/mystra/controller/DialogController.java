@@ -1,11 +1,11 @@
-package mystra;
+package com.mystra.controller;
 
+import com.mystra.model.ActivityDay;
+import com.mystra.model.ActivityItem;
 import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import mystra.datamodel.ActivityDay;
-import mystra.datamodel.ActivityItem;
 
 public class DialogController {
     @FXML

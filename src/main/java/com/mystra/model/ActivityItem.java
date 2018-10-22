@@ -1,7 +1,6 @@
-package mystra.datamodel;
+package com.mystra.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "activity_item")

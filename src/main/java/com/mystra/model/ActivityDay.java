@@ -1,15 +1,15 @@
-package mystra.datamodel;
+package com.mystra.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import mystra.HibernateUtil;
+import com.mystra.util.HibernateUtil;
 import org.hibernate.Session;
 import java.util.List;
 
 public class ActivityDay {
     private static ActivityDay instance = new ActivityDay();
 
-    private ObservableList<ActivityItem> activityItems;
+    private ObservableList<com.mystra.model.ActivityItem> activityItems;
 
     public static ActivityDay getInstance() {
         return instance;
