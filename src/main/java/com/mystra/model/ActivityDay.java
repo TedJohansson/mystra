@@ -1,11 +1,5 @@
 package com.mystra.model;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import com.mystra.util.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;

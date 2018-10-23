@@ -18,12 +18,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import com.mystra.model.ActivityItem;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.Optional;

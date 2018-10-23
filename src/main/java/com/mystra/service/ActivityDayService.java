@@ -2,7 +2,6 @@ package com.mystra.service;
 
 import com.mystra.dao.ActivityDayDao;
 import com.mystra.model.ActivityDay;
-import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
 import java.time.LocalDate;
