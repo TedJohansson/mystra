@@ -11,8 +11,7 @@ Mystra is a very simple activity tracker that will let you quickly add what you 
 
 ~~2. Create a database entity for day instead of a singleton~~ (Done)
 
-2.1. Create some sort of database interface for controller to use
-
+~~2.1. Create some sort of database interface for controller to use~~ (Done)
 
 3. Force each day to generate timeslots instead of adding activities (set max)
 

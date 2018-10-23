@@ -2,18 +2,16 @@ package com.mystra.controller;
 
 import com.mystra.model.ActivityDay;
 import com.mystra.model.ActivityItem;
-import com.mystra.util.HibernateUtil;
-import javafx.collections.FXCollections;
+import com.mystra.service.ActivityDayService;
+import com.mystra.service.ActivityItemService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
-
-import java.time.LocalDate;
 
 public class DialogController {
+    private ActivityDayService activityDayService = new ActivityDayService();
+    private ActivityItemService activityItemService = new ActivityItemService();
     @FXML
     private TextField shortDescriptionField;
     @FXML
@@ -25,19 +23,10 @@ public class DialogController {
         String shordDescription = shortDescriptionField.getText().trim();
         String details = detailsArea.getText().trim();
         int hourOfDayValue = (int) hourOfDaySlider.getValue();
-
-        // TODO: Learn where this logic should sit
-        Session session = HibernateUtil.getSessionFactory().openSession();
-
-        session.beginTransaction();
-        String hql = "SELECT ad FROM ActivityDay ad WHERE ad.date = :date";
-        Query query = session.createQuery(hql);
-        query.setParameter("date", LocalDate.now());
-        ActivityDay activityDay = (ActivityDay) query.getSingleResult();
+        ActivityDay activityDay = activityDayService.getTodaysActivityDay();
         ActivityItem item = new ActivityItem(shordDescription, details, hourOfDayValue, activityDay);
-        session.save(item);
-        session.getTransaction().commit();
-        session.close();
+        activityItemService.persist(item);
+
         return item;
     }
 }

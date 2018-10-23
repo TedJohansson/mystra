@@ -1,6 +1,8 @@
 package com.mystra.controller;
 
 import com.mystra.model.ActivityDay;
+import com.mystra.service.ActivityDayService;
+import com.mystra.service.ActivityItemService;
 import com.mystra.util.HibernateUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -28,6 +30,8 @@ import java.util.Optional;
 
 public class RootLayoutController {
     private ObservableList<ActivityItem> activityItems;
+    private ActivityItemService activityItemService = new ActivityItemService();
+    private ActivityDayService activityDayService = new ActivityDayService();
     @FXML
     private ListView<ActivityItem> activityItemListView;
     @FXML
@@ -46,17 +50,7 @@ public class RootLayoutController {
                 }
             }
         });
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
-
-        // TODO: Learn where this logic should sit
-        String hql = "SELECT ad FROM ActivityDay ad WHERE ad.date = :date";
-        Query query = session.createQuery(hql);
-        query.setParameter("date", LocalDate.now());
-        ActivityDay activityDay = (ActivityDay) query.getSingleResult();
-        activityItems = FXCollections.observableArrayList(activityDay.getActivities());
-        session.close();
-
+        activityItems = FXCollections.observableArrayList(activityDayService.getTodaysActivityDay().getActivities());
         SortedList<ActivityItem> sortedList = new SortedList<>(activityItems,
                 Comparator.comparing(ActivityItem::getHourOfDay));
 
@@ -143,12 +137,7 @@ public class RootLayoutController {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && (result.get() == ButtonType.OK)){
-            // TODO clean up this logic it needs to go else where.
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.delete(item);
-            session.getTransaction().commit();
-            session.close();
+            activityItemService.delete(item);
             activityItems.remove(item);
         }
     }
