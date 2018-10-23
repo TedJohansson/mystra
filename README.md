@@ -13,7 +13,7 @@ Mystra is a very simple activity tracker that will let you quickly add what you 
 
 ~~2.1. Create some sort of database interface for controller to use~~ (Done)
 
-3. Force each day to generate timeslots instead of adding activities (set max)
+~~3. Force each day to generate timeslots instead of adding activities~~ (Done)
 
 4. Create an edit method for the activities (Hotkey e)
 

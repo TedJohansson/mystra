@@ -1,9 +1,7 @@
 package com.mystra.controller;
 
-import com.mystra.model.ActivityDay;
 import com.mystra.service.ActivityDayService;
 import com.mystra.service.ActivityItemService;
-import com.mystra.util.HibernateUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

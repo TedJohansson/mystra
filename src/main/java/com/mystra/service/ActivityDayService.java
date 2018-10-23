@@ -36,20 +36,29 @@ public class ActivityDayService {
         activityDayDao.delete(entity);
         activityDayDao.closeCurrentSessionwithTransaction();
     }
-    public ActivityDay createTodaysActivityDay(){
+    public void createTodaysActivityDay(){
+        ActivityItemService activityItemService = new ActivityItemService();
         ActivityDay activityDay = new ActivityDay(LocalDate.now());
         persist(activityDay);
+        for (int i=0; i<8; i++) {
+            activityItemService.createEmptyActivities(activityDay, i+8);
+        }
+    }
+    public ActivityDay findByDate(LocalDate date){
+        activityDayDao.openCurrentSession();
+        ActivityDay activityDay = activityDayDao.findByDate(date);
+        activityDayDao.closeCurrentSession();
         return activityDay;
     }
     public ActivityDay getTodaysActivityDay() {
-        activityDayDao.openCurrentSession();
+        ActivityDay activityDay;
         try {
-            ActivityDay activityDay = activityDayDao.findByDate(LocalDate.now());
-            activityDayDao.closeCurrentSession();
-            return activityDay;
+            activityDay = findByDate(LocalDate.now());
         } catch (NoResultException e) {
             activityDayDao.closeCurrentSession();
-            return createTodaysActivityDay();
+            createTodaysActivityDay();
+            activityDay = findByDate(LocalDate.now());
         }
+        return activityDay;
     }
 }

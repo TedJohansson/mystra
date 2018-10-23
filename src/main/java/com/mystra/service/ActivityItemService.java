@@ -1,6 +1,7 @@
 package com.mystra.service;
 
 import com.mystra.dao.ActivityItemDao;
+import com.mystra.model.ActivityDay;
 import com.mystra.model.ActivityItem;
 
 public class ActivityItemService {
@@ -32,5 +33,8 @@ public class ActivityItemService {
         ActivityItemDao.openCurrentSessionwithTransaction();
         ActivityItemDao.delete(entity);
         ActivityItemDao.closeCurrentSessionwithTransaction();
+    }
+    public void createEmptyActivities(ActivityDay activityDay, int slot) {
+        persist(new ActivityItem("(None)", "", slot, activityDay));
     }
 }
