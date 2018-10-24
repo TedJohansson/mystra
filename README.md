@@ -19,7 +19,9 @@ Mystra is a very simple activity tracker that will let you quickly add what you 
 
 ~~5. Remove delete and add Activity functionality for user.~~ (Done)
 
-6. Clean up UI.
+~~6. Clean up UI.~~ (Done)
+
+6.1. Figure out why highlight colours go away when you click of screen
 
 7. Implement a build system (maven or girdle).
 

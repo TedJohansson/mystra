@@ -1,5 +1,6 @@
 package com.mystra.controller;
 
+import com.jfoenix.controls.JFXListView;
 import com.mystra.service.ActivityDayService;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -25,11 +26,9 @@ import java.util.Optional;
 public class RootLayoutController {
     private ActivityDayService activityDayService = new ActivityDayService();
     @FXML
-    private ListView<ActivityItem> activityItemListView;
+    private JFXListView<ActivityItem> activityItemListView;
     @FXML
     private TextArea itemDetailsTextArea;
-    @FXML
-    private Label deadlineLabel;
     @FXML
     private BorderPane mainBoarderPane;
 
@@ -56,9 +55,9 @@ public class RootLayoutController {
                         } else {
                             int currentHour = LocalDateTime.now().getHour();
                             if(item.getHourOfDay() == currentHour) {
-                                setTextFill(Color.RED);
+                                setTextFill(Color.web("#ff4c4c"));
                             } else if(item.getHourOfDay() > currentHour - 2 && item.getHourOfDay() < currentHour + 2 ) {
-                                setTextFill(Color.GREEN);
+                                setTextFill(Color.web("#f9c57c"));
                             }
                             setText(String.format("%02d-%02d: %s",
                                     item.getHourOfDay(),
@@ -117,7 +116,6 @@ public class RootLayoutController {
     private void handleChangeListView() {
         ActivityItem item = activityItemListView.getSelectionModel().getSelectedItem();
         itemDetailsTextArea.setText(item.getDetails());
-        deadlineLabel.setText(Integer.toString(item.getHourOfDay()));
     }
 
     private void loadActivityItemsToListView() {

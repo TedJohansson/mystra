@@ -1,35 +1,20 @@
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.control.Button?>
-<BorderPane fx:id="mainBoarderPane" fx:controller="com.mystra.controller.RootLayoutController"
-            xmlns:fx="http://javafx.com/fxml"
-            stylesheets="main.css">
-    <center>
-        <ListView fx:id="activityItemListView" onKeyPressed="#handleKeyPressed">
+<?xml version="1.0" encoding="UTF-8"?>
 
-        </ListView>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="mainBoarderPane" stylesheets="main.css"
+            xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/10.0.1"
+            fx:controller="com.mystra.controller.RootLayoutController">
+    <center>
+        <JFXListView fx:id="activityItemListView" onKeyPressed="#handleKeyPressed" BorderPane.alignment="CENTER" />
     </center>
     <bottom>
         <VBox style="-fx-background-color: white">
-            <TextArea fx:id="itemDetailsTextArea" VBox.vgrow="ALWAYS" wrapText="true"/>
-            <HBox>
-                <Label text="Time Slot: " style="-fx-background-color: white">
-                    <font>
-                        <Font name="Times New Roman bold" size="20"/>
-                    </font>
-                </Label>
-                <Label fx:id="deadlineLabel" style="-fx-background-color: white">
-                    <font>
-                        <Font name="Times New Roman bold" size="20"/>
-                    </font>
-                </Label>
-            </HBox>
+            <TextArea fx:id="itemDetailsTextArea" wrapText="true" VBox.vgrow="ALWAYS" />
         </VBox>
     </bottom>
 </BorderPane>

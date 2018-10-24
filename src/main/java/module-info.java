@@ -11,6 +11,7 @@ module com.mystra {
     requires com.sun.xml.txw2;
     requires com.sun.istack.runtime;
     requires com.sun.xml.fastinfoset;
+    requires com.jfoenix;
 
     opens com.mystra;
     opens com.mystra.model;
