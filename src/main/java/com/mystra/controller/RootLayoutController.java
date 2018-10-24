@@ -45,13 +45,7 @@ public class RootLayoutController {
                 }
             }
         });
-        activityItems = FXCollections.observableArrayList(activityDayService.getTodaysActivityDay().getActivities());
-        SortedList<ActivityItem> sortedList = new SortedList<>(activityItems,
-                Comparator.comparing(ActivityItem::getHourOfDay));
-
-        activityItemListView.setItems(sortedList);
-        activityItemListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        activityItemListView.getSelectionModel().selectFirst();
+        loadActivityItemsToListView();
 
         activityItemListView.setCellFactory(new Callback<ListView<ActivityItem>, ListCell<ActivityItem>>() {
             @Override
@@ -79,7 +73,7 @@ public class RootLayoutController {
     }
 
     @FXML
-    public void showNewItemDialog() {
+    public void showNewItemDialog(ActivityItem selectedActivityItem) {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(mainBoarderPane.getScene().getWindow());
         dialog.setTitle("Add new Todo Item");
@@ -87,8 +81,11 @@ public class RootLayoutController {
 
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/mystra/view/todoItemDialog.fxml"));
+        DialogController controller;
         try {
             dialog.getDialogPane().setContent(fxmlLoader.load());
+            controller = fxmlLoader.getController();
+            controller.setActivityItem(selectedActivityItem);
         } catch (IOException e) {
             System.out.println("Couln't load dialog");
             e.printStackTrace();
@@ -100,10 +97,9 @@ public class RootLayoutController {
 
         Optional<ButtonType> result = dialog.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK) {
-            DialogController controller = fxmlLoader.getController();
-            ActivityItem newItem = controller.processResults();
-            activityItems.add(newItem);
-            activityItemListView.getSelectionModel().select(newItem);
+            ActivityItem updatedItem = controller.processResults();
+            loadActivityItemsToListView();
+            activityItemListView.getSelectionModel().select(updatedItem);
         }
 
     }
@@ -114,6 +110,8 @@ public class RootLayoutController {
         if(selectedItem != null) {
             if (keyEvent.getCode().equals(KeyCode.DELETE)) {
                 deleteItem(selectedItem);
+            } else if (keyEvent.getCode().equals(KeyCode.E)) {
+                showNewItemDialog(selectedItem);
             }
         }
     }
@@ -135,5 +133,14 @@ public class RootLayoutController {
             activityItemService.delete(item);
             activityItems.remove(item);
         }
+    }
+
+    public void loadActivityItemsToListView() {
+        activityItems = FXCollections.observableArrayList(activityDayService.getTodaysActivityDay().getActivities());
+        SortedList<ActivityItem> sortedList = new SortedList<>(activityItems,
+                Comparator.comparing(ActivityItem::getHourOfDay));
+
+        activityItemListView.setItems(sortedList);
+        activityItemListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 }

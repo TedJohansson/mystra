@@ -12,21 +12,24 @@ import javafx.scene.control.TextField;
 public class DialogController {
     private ActivityDayService activityDayService = new ActivityDayService();
     private ActivityItemService activityItemService = new ActivityItemService();
+    private ActivityItem activityItem;
     @FXML
     private TextField shortDescriptionField;
     @FXML
     private TextArea detailsArea;
-    @FXML
-    private Slider hourOfDaySlider;
 
     public ActivityItem processResults() {
-        String shordDescription = shortDescriptionField.getText().trim();
-        String details = detailsArea.getText().trim();
-        int hourOfDayValue = (int) hourOfDaySlider.getValue();
-        ActivityDay activityDay = activityDayService.getTodaysActivityDay();
-        ActivityItem item = new ActivityItem(shordDescription, details, hourOfDayValue, activityDay);
-        activityItemService.persist(item);
+        activityItem.setShortDescription(shortDescriptionField.getText().trim());
+        activityItem.setDetails(detailsArea.getText().trim());
+        activityItemService.update(activityItem);
 
-        return item;
+        return activityItem;
+    }
+
+    public void setActivityItem(ActivityItem selectedActivityItem) {
+        activityItem = selectedActivityItem;
+        shortDescriptionField.setText(activityItem.getShortDescription());
+        detailsArea.setText(activityItem.getDetails());
+
     }
 }

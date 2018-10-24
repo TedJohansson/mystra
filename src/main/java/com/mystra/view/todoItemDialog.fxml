@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.Slider?>
 <DialogPane fx:controller="com.mystra.controller.DialogController"
             xmlns:fx="http://javafx.com/fxml" >
     <content>
@@ -13,9 +12,6 @@
             <Label text="Details: " GridPane.columnIndex="0" GridPane.rowIndex="1"/>
             <TextArea fx:id="detailsArea" GridPane.columnIndex="1" GridPane.rowIndex="1"
                         wrapText="true"/>
-            <Label text="Time Slot: " GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-            <Slider fx:id="hourOfDaySlider" min="8" max="24" GridPane.rowIndex="2" GridPane.columnIndex="1"
-                showTickMarks="true" showTickLabels="true" snapToTicks="true" majorTickUnit="1" minorTickCount="0"/>
 
         </GridPane>
     </content>

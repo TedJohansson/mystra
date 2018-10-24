@@ -10,15 +10,6 @@
 <BorderPane fx:id="mainBoarderPane" fx:controller="com.mystra.controller.RootLayoutController"
             xmlns:fx="http://javafx.com/fxml"
             stylesheets="main.css">
-    <top>
-        <VBox>
-            <ToolBar>
-                <HBox>
-                    <Button text="New..." onAction="#showNewItemDialog"/>
-                </HBox>
-            </ToolBar>
-        </VBox>
-    </top>
     <center>
         <ListView fx:id="activityItemListView" onKeyPressed="#handleKeyPressed">
 
