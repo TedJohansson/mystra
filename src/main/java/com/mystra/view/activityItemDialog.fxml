@@ -12,7 +12,6 @@
             <Label text="Details: " GridPane.columnIndex="0" GridPane.rowIndex="1"/>
             <TextArea fx:id="detailsArea" GridPane.columnIndex="1" GridPane.rowIndex="1"
                         wrapText="true"/>
-
         </GridPane>
     </content>
 </DialogPane>

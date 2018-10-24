@@ -1,7 +1,6 @@
 package com.mystra.controller;
 
 import com.mystra.service.ActivityDayService;
-import com.mystra.service.ActivityItemService;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -24,8 +23,6 @@ import java.util.Comparator;
 import java.util.Optional;
 
 public class RootLayoutController {
-    private ObservableList<ActivityItem> activityItems;
-    private ActivityItemService activityItemService = new ActivityItemService();
     private ActivityDayService activityDayService = new ActivityDayService();
     @FXML
     private ListView<ActivityItem> activityItemListView;
@@ -47,7 +44,7 @@ public class RootLayoutController {
         });
         loadActivityItemsToListView();
 
-        activityItemListView.setCellFactory(new Callback<ListView<ActivityItem>, ListCell<ActivityItem>>() {
+        activityItemListView.setCellFactory(new Callback<>() {
             @Override
             public ListCell<ActivityItem> call(ListView<ActivityItem> activityItemListView) {
                 ListCell<ActivityItem> cell = new ListCell<>() {
@@ -63,7 +60,10 @@ public class RootLayoutController {
                             } else if(item.getHourOfDay() > currentHour - 2 && item.getHourOfDay() < currentHour + 2 ) {
                                 setTextFill(Color.GREEN);
                             }
-                            setText(item.getShortDescription());
+                            setText(String.format("%02d-%02d: %s",
+                                    item.getHourOfDay(),
+                                    item.getHourOfDay() + 1,
+                                    item.getShortDescription()));
                         }
                     }
                 };
@@ -73,14 +73,14 @@ public class RootLayoutController {
     }
 
     @FXML
-    public void showNewItemDialog(ActivityItem selectedActivityItem) {
+    private void showUpdateItemDialog(ActivityItem selectedActivityItem) {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(mainBoarderPane.getScene().getWindow());
-        dialog.setTitle("Add new Todo Item");
-        dialog.setHeaderText("Use this dialog to create a new todo item");
+        dialog.setTitle(String.format("Update (%s)", selectedActivityItem.getShortDescription()));
+        dialog.setHeaderText("Use this dialog to update an activity");
 
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/com/mystra/view/todoItemDialog.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/com/mystra/view/activityItemDialog.fxml"));
         DialogController controller;
         try {
             dialog.getDialogPane().setContent(fxmlLoader.load());
@@ -108,10 +108,8 @@ public class RootLayoutController {
     public void handleKeyPressed(KeyEvent keyEvent) {
         ActivityItem selectedItem = activityItemListView.getSelectionModel().getSelectedItem();
         if(selectedItem != null) {
-            if (keyEvent.getCode().equals(KeyCode.DELETE)) {
-                deleteItem(selectedItem);
-            } else if (keyEvent.getCode().equals(KeyCode.E)) {
-                showNewItemDialog(selectedItem);
+            if (keyEvent.getCode().equals(KeyCode.E) || keyEvent.getCode().equals(KeyCode.ENTER)) {
+                showUpdateItemDialog(selectedItem);
             }
         }
     }
@@ -122,21 +120,11 @@ public class RootLayoutController {
         deadlineLabel.setText(Integer.toString(item.getHourOfDay()));
     }
 
-    public void deleteItem(ActivityItem item) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete Activity");
-        alert.setHeaderText("Delete Activity: " + item.getShortDescription());
-        alert.setContentText("Are you sure? Press OK to confirm, or cancel.");
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if (result.isPresent() && (result.get() == ButtonType.OK)){
-            activityItemService.delete(item);
-            activityItems.remove(item);
-        }
-    }
-
-    public void loadActivityItemsToListView() {
-        activityItems = FXCollections.observableArrayList(activityDayService.getTodaysActivityDay().getActivities());
+    private void loadActivityItemsToListView() {
+        ObservableList<ActivityItem> activityItems = FXCollections.observableArrayList(
+                activityDayService
+                        .getTodaysActivityDay()
+                        .getActivities());
         SortedList<ActivityItem> sortedList = new SortedList<>(activityItems,
                 Comparator.comparing(ActivityItem::getHourOfDay));
 

@@ -15,9 +15,9 @@ Mystra is a very simple activity tracker that will let you quickly add what you 
 
 ~~3. Force each day to generate timeslots instead of adding activities~~ (Done)
 
-4. Create an edit method for the activities (Hotkey e)
+~~4. Create an edit method for the activities (Hotkey e)~~ (Done)
 
-5. Remove delete and add Activity functionality for user.
+~~5. Remove delete and add Activity functionality for user.~~ (Done)
 
 6. Clean up UI.
 

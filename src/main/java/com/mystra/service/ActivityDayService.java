@@ -40,7 +40,7 @@ public class ActivityDayService {
         ActivityItemService activityItemService = new ActivityItemService();
         ActivityDay activityDay = new ActivityDay(LocalDate.now());
         persist(activityDay);
-        for (int i=0; i<8; i++) {
+        for (int i=0; i<9; i++) {
             activityItemService.createEmptyActivities(activityDay, i+8);
         }
     }
