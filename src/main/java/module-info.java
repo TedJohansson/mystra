@@ -12,6 +12,8 @@ module com.mystra {
     requires com.sun.istack.runtime;
     requires com.sun.xml.fastinfoset;
     requires com.jfoenix;
+    requires de.jensd.fx.glyphs.commons;
+    requires de.jensd.fx.glyphs.materialicons;
 
     opens com.mystra;
     opens com.mystra.model;

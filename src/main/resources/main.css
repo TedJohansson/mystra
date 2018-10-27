@@ -18,3 +18,25 @@
 .list-view .list-cell:selected {
     -fx-background-color: #0e8725;
 }
+#header {
+    -fx-background-color: #13af30;
+}
+#yesterdayButton, #tomorrowButton {
+    -fx-background-radius: 0;
+    -fx-background-color: #13af30;
+    -fx-text-fill: white;
+}
+.date-picker {
+    -fx-background-radius: 0;
+    -fx-background-color: #13af30;
+}
+.date-picker > .arrow-button {
+    -fx-background-radius: 0;
+    -fx-background-color: #0e8e26;
+}
+#dateLabel {
+    -fx-text-fill: white;
+    -fx-font-size: 2em;
+    -fx-font-weight: bold;
+    -fx-font-family: monospace;
+}

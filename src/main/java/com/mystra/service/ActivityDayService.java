@@ -36,9 +36,9 @@ public class ActivityDayService {
         activityDayDao.delete(entity);
         activityDayDao.closeCurrentSessionwithTransaction();
     }
-    public void createTodaysActivityDay(){
+    public void createActivityDayByDate(LocalDate date){
         ActivityItemService activityItemService = new ActivityItemService();
-        ActivityDay activityDay = new ActivityDay(LocalDate.now());
+        ActivityDay activityDay = new ActivityDay(date);
         persist(activityDay);
         for (int i=0; i<9; i++) {
             activityItemService.createEmptyActivities(activityDay, i+8);
@@ -50,14 +50,14 @@ public class ActivityDayService {
         activityDayDao.closeCurrentSession();
         return activityDay;
     }
-    public ActivityDay getTodaysActivityDay() {
+    public ActivityDay getActivityDayByDate(LocalDate date) {
         ActivityDay activityDay;
         try {
-            activityDay = findByDate(LocalDate.now());
+            activityDay = findByDate(date);
         } catch (NoResultException e) {
             activityDayDao.closeCurrentSession();
-            createTodaysActivityDay();
-            activityDay = findByDate(LocalDate.now());
+            createActivityDayByDate(date);
+            activityDay = findByDate(date);
         }
         return activityDay;
     }
