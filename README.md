@@ -25,5 +25,5 @@ Mystra is a very simple activity tracker that will let you quickly add what you 
 
 8. ~~Navigate forward in time to create future events.~~ (Done)
 
-9. ~~Implement a build system (maven or girdle). ~~ (Done)
+9. ~~Implement a build system (maven or girdle).~~ (Done)
 
