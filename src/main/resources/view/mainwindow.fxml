@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
@@ -11,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.ListView?>
 <BorderPane fx:id="mainBoarderPane" stylesheets="main.css"
             xmlns:fx="http://javafx.com/fxml/1"
             xmlns="http://javafx.com/javafx/10.0.1"
@@ -34,7 +34,7 @@
         </HBox>
     </top>
     <center>
-        <JFXListView fx:id="activityItemListView" onKeyPressed="#handleKeyPressedListView" BorderPane.alignment="CENTER" />
+        <ListView fx:id="activityItemListView" onKeyPressed="#handleKeyPressedListView" BorderPane.alignment="CENTER" />
     </center>
     <bottom>
         <VBox>

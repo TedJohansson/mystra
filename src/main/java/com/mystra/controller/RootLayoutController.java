@@ -1,6 +1,5 @@
 package com.mystra.controller;
 
-import com.jfoenix.controls.JFXListView;
 import com.mystra.model.ActivityDay;
 import com.mystra.service.ActivityDayService;
 import javafx.beans.value.ChangeListener;
@@ -27,7 +26,7 @@ public class RootLayoutController {
     private BitSet keyboardBitSet = new BitSet();
     private ActivityDay day;
     @FXML
-    private JFXListView<ActivityItem> activityItemListView;
+    private ListView<ActivityItem> activityItemListView;
     @FXML
     private TextArea itemDetailsTextArea;
     @FXML
@@ -81,7 +80,7 @@ public class RootLayoutController {
         dialog.setHeaderText("Use this dialog to update an activity");
 
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/com/mystra/view/activityItemDialog.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/view/activityItemDialog.fxml"));
         DialogController controller;
         try {
             dialog.getDialogPane().setContent(fxmlLoader.load());
